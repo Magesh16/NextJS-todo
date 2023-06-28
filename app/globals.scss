@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0");
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.heading{
+    display: flex;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 30px;
+    h2{
+        color:antiquewhite;
+        background-color: rgb(70, 180, 180);
+        width: 40%;
+        border-radius: 20px;
+    }
+}
+.input_button{
+    margin-top: 30px;
+    height:70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    #inputText{
+        width: 50%;
+        height:30px;
+        align-items: center;
+        margin-right: 20px;
+    }
+    .add_button{
+        width:60px;
+        height:30px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+}
+table,th,td{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.table_class{
+    display: flex;
+    justify-content: center;
+    table{   
+        width:90%;
+        text-align: center;   
+    }
+}
+.edit_button{
+    cursor: pointer;
+}
+.delete_button{
+    cursor: pointer;
+}
