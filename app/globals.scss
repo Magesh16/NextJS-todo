@@ -3,6 +3,7 @@
 *{
     padding: 0;
     margin: 0;
+    background-color: rgb(187, 192, 180);
 }
 
 .heading{
@@ -14,7 +15,7 @@
     font-size: 30px;
     h2{
         color:antiquewhite;
-        background-color: rgb(70, 180, 180);
+        background-color: rgb(45, 46, 46);
         width: 40%;
         border-radius: 20px;
     }
@@ -31,12 +32,21 @@
         height:30px;
         align-items: center;
         margin-right: 20px;
+        border-radius: 20px;
+        font-size: 20px;
+        font-family: 'sans-serif';
+        padding: 6px;
+        border: 2px solid black;
     }
     .add_button{
         width:60px;
         height:30px;
         border-radius: 20px;
+        border: 2px solid black;
         cursor: pointer;
+        &:hover{
+            transform: scale(1.06);
+        }
     }
 }
 table,th,td{
@@ -53,7 +63,24 @@ table,th,td{
 }
 .edit_button{
     cursor: pointer;
+    margin-right: 10px;
+    border-radius: 20%;
+    padding: 3px;
+    border:0.5px solid black;
+    &:hover{
+        transform: scale(1.06);
+    }
 }
 .delete_button{
     cursor: pointer;
+    border-radius: 20%;
+    padding: 3px;
+    border:0.5px solid black;
+    &:hover{
+        transform: scale(1.06);
+    }
+}
+
+.action_button{
+    padding: 4px;
 }

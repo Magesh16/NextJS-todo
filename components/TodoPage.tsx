@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 
 const TodoPage = () => {
@@ -122,15 +121,15 @@ const TodoPage = () => {
         <table>
           <tbody>
             <tr>
-              <th>S.No</th>
+              <th className="action_button">S.No</th>
               <th>Tasks</th>
-              <th>Actions</th>
+              <th >Actions</th>
             </tr>
-            {task.map((t: any) => (
+            {task.map((t:any) => (
               <tr key={t._id}>
                 <td>{t._id}</td>
                 <td>{t.text}</td>
-                <td>
+                <td className="action_button">
                   <button
                     className="edit_button"
                     onClick={() => handleEdit(t._id, t.text)}
