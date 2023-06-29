@@ -4,12 +4,9 @@ import React, { useEffect, useState } from "react";
 
 const TodoPage = () => {
   const [text, setText] = useState("");
-  const [post, setPost] = useState({
-    text: "",
-  });
   const [update, setUpdate] = useState(false);
   const [task, setTask] = useState([]);
-  const [id,setId] = useState("");
+  const [id, setId] = useState("");
 
   const handleClick = async (e: any) => {
     e.preventDefault();
@@ -35,27 +32,26 @@ const TodoPage = () => {
     }
   };
 
-  const handleUpdate = async (e:any)=>{
-        e.preventDefault();
-        const response = await fetch(`/api/tasks/${id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text }),
-        });
-  
-        if (response.ok) {
-          console.log("Task updated successfully");
-          fetchTasks();
-          setText("");
-          setId("");
-          setUpdate(false);
-        } else {
-          console.log("Failed to update task");
-        }
-      }
-  
+  const handleUpdate = async (e: any) => {
+    e.preventDefault();
+    const response = await fetch(`/api/tasks/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text }),
+    });
+
+    if (response.ok) {
+      console.log("Task updated successfully");
+      fetchTasks();
+      setText("");
+      setId("");
+      setUpdate(false);
+    } else {
+      console.log("Failed to update task");
+    }
+  };
 
   const fetchTasks = async () => {
     try {
@@ -76,7 +72,18 @@ const TodoPage = () => {
   const handleEdit = async (id: string, text: string) => {
     setText(text);
     setUpdate(true);
-    setId(id)
+    setId(id);
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await fetch(`/api/tasks/${id}`, {
+        method: "DELETE",
+      });
+      fetchTasks();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -94,12 +101,12 @@ const TodoPage = () => {
         />
         {update ? (
           <button
-          className="add_button"
-          type="submit"
-          onClick={(e) => handleUpdate(e)}
-        >
-          <span className="material-symbols-outlined">library_books</span>
-        </button>
+            className="add_button"
+            type="submit"
+            onClick={(e) => handleUpdate(e)}
+          >
+            <span className="material-symbols-outlined">library_books</span>
+          </button>
         ) : (
           <button
             className="add_button"
@@ -119,7 +126,7 @@ const TodoPage = () => {
               <th>Tasks</th>
               <th>Actions</th>
             </tr>
-            {task.map((t:any) => (
+            {task.map((t: any) => (
               <tr key={t._id}>
                 <td>{t._id}</td>
                 <td>{t.text}</td>
@@ -130,7 +137,10 @@ const TodoPage = () => {
                   >
                     <span className="material-symbols-outlined">edit_note</span>
                   </button>
-                  <button className="delete_button">
+                  <button
+                    className="delete_button"
+                    onClick={() => handleDelete(t._id)}
+                  >
                     <span className="material-symbols-outlined">delete</span>
                   </button>
                 </td>

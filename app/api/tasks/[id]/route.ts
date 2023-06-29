@@ -22,3 +22,14 @@ export const PATCH = async (req:Request, {params}:any) =>{
         return new Response("Failed to update the post", { status: 500 })
     }
 }
+
+export const DELETE = async(req: Request, {params}:any)=>{
+    try{
+        await connectToDb();
+        await PostModel.findByIdAndRemove(params.id);
+        return new Response("Deleted successfully", {status : 200})
+
+    }catch(err){
+        return new Response("Failed to Delete the post", { status: 500 })
+    }
+}
