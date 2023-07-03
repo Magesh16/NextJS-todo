@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+import mongoose, {ConnectOptions } from "mongoose";
 
 let isConnected =false;
+
 
 export const connectToDb = async()=>{
     mongoose.set("strictQuery", true);
@@ -9,11 +10,10 @@ export const connectToDb = async()=>{
         return;
     }
         try{
-            await mongoose.connect(process.env.MONGO_URI, {
+            const options: ConnectOptions = {
                 dbName: "Next-todo",
-                useNewUrlParser: true,
-                useUnifiedTopology: true
-            })
+              };
+            await mongoose.connect(process.env.MONGO_URI, options)
 
             isConnected = true;
             console.log("MongoDB Connected")

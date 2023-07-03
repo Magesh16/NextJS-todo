@@ -1,89 +1,21 @@
 "use client";
+import { Idata } from "@/types/data.types";
+import { CreateHandler } from "@/utils/CreateHandler";
+import { DeleteHandler } from "@/utils/DeleteHandle";
+import { fetchTasks } from "@/utils/FetchTask";
+import {EditHandler, UpdateHandler } from "@/utils/UpdateHandler";
 import React, { useEffect, useState } from "react";
 
 const TodoPage = () => {
+  const [id, setId] = useState("");
   const [text, setText] = useState("");
   const [update, setUpdate] = useState(false);
   const [task, setTask] = useState([]);
-  const [id, setId] = useState("");
 
-  const handleClick = async (e: any) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("/api/tasks/new", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          text: text,
-        }),
-      });
-      console.log(response);
-
-      if (response.ok) {
-        console.log("Posted successfully");
-        setText("");
-        fetchTasks();
-      }
-    } catch (err) {
-      console.log("Error to create post");
-    }
-  };
-
-  const handleUpdate = async (e: any) => {
-    e.preventDefault();
-    const response = await fetch(`/api/tasks/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text }),
-    });
-
-    if (response.ok) {
-      console.log("Task updated successfully");
-      fetchTasks();
-      setText("");
-      setId("");
-      setUpdate(false);
-    } else {
-      console.log("Failed to update task");
-    }
-  };
-
-  const fetchTasks = async () => {
-    try {
-      const response = await fetch("/api/tasks");
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        setTask(data);
-      }
-    } catch (err) {
-      console.log("Error fetching tasks:", err);
-    }
-  };
   useEffect(() => {
-    fetchTasks();
+    fetchTasks(setTask);
   }, []);
 
-  const handleEdit = async (id: string, text: string) => {
-    setText(text);
-    setUpdate(true);
-    setId(id);
-  };
-
-  const handleDelete = async (id: string) => {
-    try {
-      await fetch(`/api/tasks/${id}`, {
-        method: "DELETE",
-      });
-      fetchTasks();
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return (
     <div>
@@ -102,7 +34,7 @@ const TodoPage = () => {
           <button
             className="add_button"
             type="submit"
-            onClick={(e) => handleUpdate(e)}
+            onClick={(e) => UpdateHandler(e,id,text,setText,setUpdate,setId,setTask)}
           >
             <span className="material-symbols-outlined">library_books</span>
           </button>
@@ -110,7 +42,7 @@ const TodoPage = () => {
           <button
             className="add_button"
             type="submit"
-            onClick={(e) => handleClick(e)}
+            onClick={(e) => CreateHandler(e,text,setText,setTask)}
           >
             <span className="material-symbols-outlined">add</span>
           </button>
@@ -125,20 +57,20 @@ const TodoPage = () => {
               <th>Tasks</th>
               <th >Actions</th>
             </tr>
-            {task.map((t:any) => (
+            {task.map((t:Idata) => (
               <tr key={t._id}>
                 <td>{t._id}</td>
                 <td>{t.text}</td>
                 <td className="action_button">
                   <button
                     className="edit_button"
-                    onClick={() => handleEdit(t._id, t.text)}
+                    onClick={() => EditHandler(setText, setUpdate, setId, t._id, t.text)}
                   >
                     <span className="material-symbols-outlined">edit_note</span>
                   </button>
                   <button
                     className="delete_button"
-                    onClick={() => handleDelete(t._id)}
+                    onClick={() => DeleteHandler(t._id, setTask)}
                   >
                     <span className="material-symbols-outlined">delete</span>
                   </button>
